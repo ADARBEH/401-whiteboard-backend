@@ -4,14 +4,14 @@ const Post = require('./post.model.js');
 const POSTGRES_URL = process.env.DATABASE_URL || "postgresql://adarbeh:0000@localhost:5432/adarbeh";
 
 
-// const sequelizeOptions = {
-//     dialectOptions: {
-//         ssl: {
-//             require: true,
-//             rejectUnauthorized: false
-//         }
-//     }
-// };
+const sequelizeOptions = {
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
+};
 
 
 const sequelize = new Sequelize(POSTGRES_URL, {
