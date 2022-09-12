@@ -14,11 +14,7 @@ const sequelizeOptions = {
 };
 
 
-const sequelize = new Sequelize(POSTGRES_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
-    dialectOptions: {}, 
-  });
+const sequelize = new Sequelize(POSTGRES_URL, sequelizeOptions);
 
 module.exports = {
     db: sequelize,
