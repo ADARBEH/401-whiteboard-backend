@@ -3,28 +3,26 @@
 const express = require('express');
 const router = express.Router();
 
-const { Post , commentModel } = require('../models/index');
+const { Comment } = require('../models/index');
 
 
-router.get('/post', getallPosts);
-router.get('/post/:id', getonePost);
-router.post('/post', createPost);
-router.put('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+router.get('/comment', getallcomment);
+router.get('/comment/:id', getonecomment);
+router.post('/comment', createcomment);
+router.put('/comment/:id', updatecomment);
+router.delete('/comment/:id', deletecomment);
 
 
-function getallPosts(req, res) {
-    Post.readWithComments(commentModel).then((data) => {
+function getallcomment(req, res) {
+    Comment.read().then((data) => {
         res.status(200).json(data);
     });
 }
 
-
-
-function getonePost(req, res) {
+function getonecomment(req, res) {
     let id = Number(req.params.id);
     if (typeof id === 'number' && !Number.isNaN(id)) {
-        Post.read(id).then((data) => {
+        Comment.read(id).then((data) => {
             res.status(200).json(data);
         });
     }
@@ -34,31 +32,31 @@ function getonePost(req, res) {
 }
 
 
-function createPost(req, res) {
+async function createcomment(req, res) {
     const obj = req.body;
-    Post.create(obj).then((data) => {
+    Comment.create(obj).then((data) => {
         res.status(201).json(data);
     });
 }
 
-function updatePost(req, res) {
+function updatecomment(req, res) {
     const id = Number(req.params.id);
     const obj = req.body;
     if (typeof id === 'number' && !Number.isNaN(id)) {
-    Post.update(id, obj).then((data) => {
-        res.status(204).json(data);
-    });}
+        Comment.update(id, obj).then((data) => {
+            res.status(204).json(data);
+        });
+    }
     else {
         res.status(500).json({ message: 'Server Error' });
     }
 }
 
-function deletePost(req, res) {
+function deletecomment(req, res) {
     const id = Number(req.params.id);
-    Post.delete(id).then((data) => {
+    Comment.delete(id).then((data) => {
         res.status(200).json(data);
     });
 }
-
 
 module.exports = router;
