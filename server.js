@@ -6,7 +6,6 @@ const cors = require('cors');
 const commentRoute = require('./routes/Comment.route');
 const postRoute = require('./routes/post.route');
 
-// const notFoundHandler = require('./error-handlers/404');
 
 app.use(cors());
 app.use(express.json());
