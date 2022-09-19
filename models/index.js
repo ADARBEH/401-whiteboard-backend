@@ -32,6 +32,7 @@ commentModel.belongsTo(postModel, { foreignKey: 'ownerID', targetKey: 'id' });
 
 const postcollections = new user_comment_routes(postModel);
 const commentcollections = new user_comment_routes(commentModel);
+const User = require('./user.model.js')(sequelize, DataTypes);
 
 
 module.exports = {
@@ -39,5 +40,6 @@ module.exports = {
     Comment: commentcollections,
     Post: postcollections,
     commentModel: commentModel,
+    User: User
 
 }
