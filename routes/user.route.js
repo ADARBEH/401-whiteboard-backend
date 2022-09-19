@@ -2,16 +2,12 @@
 
 const router = require('express').Router();
 const userAuth = require('../middlewares/userAuth');
+const { signup, signin } = require('../controllers/usercontrollers');
 
-router.post('/login', (req, res) => {
-    res.send('Login');
-}
-);
+router.post('/login', signin);
 
-router.post('/signup',userAuth , (req, res) => {
-    res.send('Signup');
-}
-);
+router.post('/signup',userAuth , signup);
+
 
 module.exports = router;
 
