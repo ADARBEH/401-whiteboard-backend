@@ -8,7 +8,6 @@ try{
     if (userName) {
         return res.status(409).json({ message: 'Username already exists' });
     }
-    console.log(req.body.userName ,"line 11")
 
     const email = await User.findOne({ where: { email: req.body.email } });
     if (email) {
