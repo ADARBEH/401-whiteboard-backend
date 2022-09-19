@@ -2,7 +2,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const Post = require('./post.model.js');
 const Comment = require('./comment.model.js');
-const POSTGRES_URL = "postgres://faldrbueajsumr:dfe4d50d3d42ac8bb9a9af31dcbcfe77709344d9361aeef36a6ab4c45e91521b@ec2-34-231-42-166.compute-1.amazonaws.com:5432/d9ktkjtf6adsoj";
+const POSTGRES_URL = "postgres://wgszegnyqxpvex:faad326b6b4c9dbb79fe34fcd5e5d0e195e88574d6c44530c47a242ce146d335@ec2-3-93-206-109.compute-1.amazonaws.com:5432/d20ko6bh6475hk";
 
 // const POSTGRES_URL = "postgres://adarbeh:0000@localhost:5432/adarbeh";
 const user_comment_routes = require('../collections/user_comment_routes.js');
