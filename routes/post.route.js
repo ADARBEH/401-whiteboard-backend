@@ -2,15 +2,16 @@
 
 const express = require('express');
 const router = express.Router();
+const bearerAuth = require('../middlewares/bearer-auth');
 
 const { Post , commentModel } = require('../models/index');
 
 
-router.get('/post', getallPosts);
-router.get('/post/:id', getonePost);
-router.post('/post', createPost);
-router.put('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+router.get('/post',bearerAuth, getallPosts);
+router.get('/post/:id',bearerAuth, getonePost);
+router.post('/post',bearerAuth, createPost);
+router.put('/post/:id', bearerAuth, updatePost);
+router.delete('/post/:id',bearerAuth, deletePost);
 
 
 function getallPosts(req, res) {
