@@ -4,14 +4,16 @@ const express = require('express');
 const router = express.Router();
 const bearerAuth = require('../middlewares/bearer-auth');
 
-const { Post , commentModel } = require('../models/index');
+
+const { Post, commentModel } = require('../models/index');
 
 
-router.get('/post', getallPosts);
-router.get('/post/:id', getonePost);
-router.post('/post', createPost);
-router.put('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+
+router.get('/post', bearerAuth, getallPosts);
+router.get('/post/:id', bearerAuth, getonePost);
+router.post('/post', bearerAuth, createPost);
+router.put('/post/:id', bearerAuth, updatePost);
+router.delete('/post/:id', bearerAuth, deletePost);
 
 
 function getallPosts(req, res) {
@@ -43,22 +45,32 @@ function createPost(req, res) {
 }
 
 function updatePost(req, res) {
-    const id = Number(req.params.id);
-    const obj = req.body;
-    if (typeof id === 'number' && !Number.isNaN(id)) {
-    Post.update(id, obj).then((data) => {
-        res.status(204).json(data);
-    });}
-    else {
-        res.status(500).json({ message: 'Server Error' });
+    if (req.user.role.includes('admin')) {
+
+        const id = Number(req.params.id);
+        const obj = req.body;
+        if (typeof id === 'number' && !Number.isNaN(id)) {
+            Post.update(id, obj).then((data) => {
+                res.status(200).json(data);
+            }
+            );
+
+        } else {
+            res.status(403).json({ message: 'Not Allowed' });
+        }
     }
 }
 
 function deletePost(req, res) {
     const id = Number(req.params.id);
-    Post.delete(id).then((data) => {
-        res.status(200).json(data);
-    });
+    if (req.user.role.includes('admin')) {
+        Post.delete(id).then((data) => {
+            res.status(200).json(data);
+        });
+    } else {
+        res.status(401).json('you are do nat have capabilities')
+    }
+
 }
 
 

@@ -4,13 +4,16 @@ const base64 = require('base-64');
 const { User } = require('../models');
 
 
+
 const signup = async (req, res) => {
     try {
-        const { userName, email, password } = req.body;
+        const { userName, email, password , role } = req.body;
+        
         const user = await User.create({
             userName,
             email,
-            password: await bcrypt.hash(password, 10)
+            password: await bcrypt.hash(password, 10),
+            role
         });
         if (user) {
             res.status(201).json(user);
@@ -32,6 +35,7 @@ const signin = async (req, res) => {
             const isValid = await bcrypt.compare(password, user.password);
             if (isValid) {
                 res.status(200).json(user);
+
             } else {
                 res.status(403).json({ message: 'Check Your Password & Email' });
             }
@@ -46,6 +50,7 @@ const signin = async (req, res) => {
 }
 
 const allUser = async (req, res) => {
+
     try {
         const user = await User.findAll();
         res.status(200).json(user);
