@@ -14,7 +14,7 @@ router.get('/post/:id', bearerAuth, getonePost);
 router.post('/post', bearerAuth, createPost);
 router.put('/post/:id', bearerAuth, updatePost);
 router.delete('/post/:id', bearerAuth, deletePost);
-
+router.delete('/post', bearerAuth, deleteallPosts);
 
 function getallPosts(req, res) {
     Post.readWithComments(commentModel).then((data) => {
@@ -45,7 +45,7 @@ function createPost(req, res) {
 }
 
 function updatePost(req, res) {
-    if (req.user.role.includes('admin')) {
+    // if (req.user.role.includes('admin')) {
 
         const id = Number(req.params.id);
         const obj = req.body;
@@ -55,22 +55,29 @@ function updatePost(req, res) {
             }
             );
 
-        } else {
-            res.status(403).json({ message: 'Not Allowed' });
-        }
+        // } else {
+        //     res.status(403).json({ message: 'Not Allowed' });
+        // }
     }
 }
 
 function deletePost(req, res) {
     const id = Number(req.params.id);
-    if (req.user.role.includes('admin')) {
+    // if (req.user.capabilities.includes('delete') || req.user.id === id) {
         Post.delete(id).then((data) => {
             res.status(200).json(data);
         });
-    } else {
-        res.status(401).json('you are do nat have capabilities')
-    }
+    // } else {
+    //     res.status(401).json('you are do nat have capabilities')
+    // }
 
+    
+}
+
+function deleteallPosts(req, res) {
+    Post.deleteAll().then((data) => {
+        res.status(200).json(data);
+    });
 }
 
 

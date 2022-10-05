@@ -2,6 +2,8 @@
 const bcrypt = require('bcrypt');
 const base64 = require('base-64');
 const { User } = require('../models');
+const {postin} = require('../models/index.js');
+const {commentinc} = require('../models/index.js');
 
 
 
@@ -52,7 +54,7 @@ const signin = async (req, res) => {
 const allUser = async (req, res) => {
 
     try {
-        const user = await User.findAll();
+        const user = await User.findAll({include: {all : true}});
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: `${error}` });
